@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    form {
+      max-width: 400px;
+      margin: auto;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: blue;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Registration Form</h1>
+  <form id="registrationForm">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" placeholder="Enter your name">
+      <div id="nameError" class="error"></div>
+    </div>
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input type="text" id="age" placeholder="Enter your age">
+      <div id="ageError" class="error"></div>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="text" id="phone" placeholder="Enter your phone number">
+      <div id="phoneError" class="error"></div>
+    </div>
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    // Select DOM elements
+    const form = document.getElementById('registrationForm');
+    const nameInput = document.getElementById('name');
+    const ageInput = document.getElementById('age');
+    const phoneInput = document.getElementById('phone');
+    const nameError = document.getElementById('nameError');
+    const ageError = document.getElementById('ageError');
+    const phoneError = document.getElementById('phoneError');
+
+    // Regular expressions for validation
+    const nameRegex = /^[A-Za-z\s]+$/; // Only letters and spaces
+    const ageRegex = /^[1-9]\d*$/; // Positive integers
+    const phoneRegex = /^\d{10}$/; // Exactly 10 digits
+
+    // Validation function
+    function validateForm(event) {
+      let isValid = true;
+
+      // Validate Name
+      if (!nameRegex.test(nameInput.value.trim())) {
+        nameError.textContent = 'Name must contain only letters and spaces.';
+        isValid = false;
+      } else {
+        nameError.textContent = '';
+      }
+
+      // Validate Age
+      if (!ageRegex.test(ageInput.value.trim())) {
+        ageError.textContent = 'Age must be a positive integer.';
+        isValid = false;
+      } else {
+        ageError.textContent = '';
+      }
+
+      // Validate Phone Number
+      if (!phoneRegex.test(phoneInput.value.trim())) {
+        phoneError.textContent = 'Phone number must be exactly 10 digits.';
+        isValid = false;
+      } else {
+        phoneError.textContent = '';
+      }
+
+      // Prevent form submission if any field is invalid
+      if (!isValid) {
+        event.preventDefault();
+      }
+    }
+
+    // Attach validation to form submission
+    form.addEventListener('submit', validateForm);
+  </script>
+</body>
+</html>
